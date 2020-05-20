@@ -1,7 +1,9 @@
+//#region Imports
 import { JaguarLandRoverRemoteApi } from "../util/remote";
 import { HomeKitService } from "./base";
 import callbackify from "../util/callbackify";
 import { wait } from "../util/wait";
+//#endregion
 
 export class HomeKitChargerService extends HomeKitService {
   constructor(
@@ -14,6 +16,7 @@ export class HomeKitChargerService extends HomeKitService {
     super(log, jlrRemoteApi, Characteristic);
 
     const chargingService = new Service.Outlet(`${name} Charger`, "vehicle");
+    
     chargingService
       .getCharacteristic(Characteristic.On)
       .on("get", callbackify(this.getChargerOutletOnOff))
@@ -21,6 +24,7 @@ export class HomeKitChargerService extends HomeKitService {
     chargingService
       .getCharacteristic(Characteristic.OutletInUse)
       .on("get", callbackify(this.getChargerOutletInUse));
+
     this.service = chargingService;
   }
 
