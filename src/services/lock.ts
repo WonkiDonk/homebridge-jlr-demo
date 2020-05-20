@@ -1,4 +1,4 @@
-import { JaguarLandRoverRemoteService } from "../util/remote";
+import { JaguarLandRoverRemoteApi } from "../util/remote";
 import { HomeKitService } from "./base";
 import callbackify from "../util/callbackify";
 import { wait } from "../util/wait";
@@ -7,7 +7,7 @@ export class HomeKitLockService extends HomeKitService {
   constructor(
     name: string,
     log: Function,
-    jlrRemoteService: JaguarLandRoverRemoteService,
+    jlrRemoteService: JaguarLandRoverRemoteApi,
     Service: any,
     Characteristic: any,
   ) {
@@ -27,7 +27,7 @@ export class HomeKitLockService extends HomeKitService {
   getLockCurrentState = async () => {
     this.log("Getting current lock state");
 
-    const vehicleStatus = await this.incontrol.getVehicleStatus();
+    const vehicleStatus = await this.jlrRemoteApi.getVehicleStatus();
     const lockedState = vehicleStatus.DOOR_IS_ALL_DOORS_LOCKED;
 
     return lockedState === "TRUE"
@@ -38,7 +38,7 @@ export class HomeKitLockService extends HomeKitService {
   getLockTargetState = async () => {
     this.log("Getting target lock state");
 
-    const vehicleStatus = await this.incontrol.getVehicleStatus();
+    const vehicleStatus = await this.jlrRemoteApi.getVehicleStatus();
     const lockedState = vehicleStatus.DOOR_IS_ALL_DOORS_LOCKED;
 
     return lockedState === "TRUE"
@@ -50,9 +50,9 @@ export class HomeKitLockService extends HomeKitService {
     this.log("Setting target lock state", state);
 
     if (state === this.Characteristic.LockTargetState.SECURED) {
-      await this.incontrol.lockVehicle();
+      await this.jlrRemoteApi.lockVehicle();
     } else {
-      await this.incontrol.unlockVehicle();
+      await this.jlrRemoteApi.unlockVehicle();
     }
 
     // We succeeded, so update the "current" state as well.

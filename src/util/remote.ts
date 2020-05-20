@@ -25,7 +25,7 @@ type LockUnlockOperation = {
   tokenType: string;
 };
 
-export class JaguarLandRoverRemoteService {
+export class JaguarLandRoverRemoteApi {
   private auth: Authentication | undefined;
   private UnlockVehicleOperation: LockUnlockOperation = {
     name: "unlock",
@@ -176,7 +176,7 @@ export class JaguarLandRoverRemoteService {
       return false;
     }
 
-    this.log("Registering device", deviceId);
+    this.log("Registering device");
     const headers = {
       "Content-Type": "application/json",
       "X-Device-Id": deviceId,
@@ -215,7 +215,7 @@ export class JaguarLandRoverRemoteService {
       return "";
     }
 
-    this.log("Getting user id", username);
+    this.log("Getting user id");
     const headers = {
       Accept: "application/vnd.wirelesscar.ngtp.if9.User-v3+json",
       Authorization: `Bearer ${auth.accessToken}`,
@@ -231,7 +231,7 @@ export class JaguarLandRoverRemoteService {
     );
 
     const userId = result.userId;
-    this.log("Log in user id", userId);
+    this.log("Log in user id");
 
     return userId;
   };
@@ -345,11 +345,11 @@ export class JaguarLandRoverRemoteService {
     const { vin, deviceId } = this.credentials;
     const auth = await this.getSession();
 
-    this.log("Getting vehicle", name, vin);
+    this.log("Getting vehicle");
 
     const headers = {
       Authorization: `Bearer ${auth.accessToken}`,
-      Accept: JaguarLandRoverRemoteService.vehicleInformationAccepts[name],
+      Accept: JaguarLandRoverRemoteApi.vehicleInformationAccepts[name],
       "Content-Type": "application/json",
       "X-Device-Id": deviceId,
     };

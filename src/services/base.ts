@@ -1,14 +1,14 @@
-import { JaguarLandRoverRemoteService } from "../util/remote";
+import { JaguarLandRoverRemoteApi } from "../util/remote";
 
 export abstract class HomeKitService {
   protected readonly Characteristic: any;
-  protected readonly incontrol: JaguarLandRoverRemoteService;
+  protected readonly jlrRemoteApi: JaguarLandRoverRemoteApi;
   protected readonly log: Function;
   protected service: any;
 
-  constructor(log: Function, jlrRemoteService: JaguarLandRoverRemoteService, Characteristic: any) {
+  constructor(log: Function, jlrRemoteApi: JaguarLandRoverRemoteApi, Characteristic: any) {
     this.log = log;
-    this.incontrol = jlrRemoteService;
+    this.jlrRemoteApi = jlrRemoteApi;
     this.Characteristic = Characteristic;
   }
 

@@ -1,4 +1,4 @@
-import { JaguarLandRoverRemoteService } from "../util/remote";
+import { JaguarLandRoverRemoteApi } from "../util/remote";
 import { HomeKitService } from "./base";
 import callbackify from "../util/callbackify";
 import { wait } from "../util/wait";
@@ -14,7 +14,7 @@ export class HomeKitPreconditioningService extends HomeKitService {
     targetTemperature: number | undefined,
     coolingThresholdTemperature: number | undefined,
     log: Function,
-    jlrRemoteService: JaguarLandRoverRemoteService,
+    jlrRemoteService: JaguarLandRoverRemoteApi,
     Service: any,
     Characteristic: any,
   ) {
@@ -50,7 +50,7 @@ export class HomeKitPreconditioningService extends HomeKitService {
   getCurrentHeatingCoolingState = async () => {
     this.log("Getting current heating/cooling state");
 
-    const vehicleStatus = await this.incontrol.getVehicleStatus();
+    const vehicleStatus = await this.jlrRemoteApi.getVehicleStatus();
     const climateStatus = vehicleStatus.CLIMATE_STATUS_OPERATING_STATUS;
 
     const climateOnState =
@@ -66,7 +66,7 @@ export class HomeKitPreconditioningService extends HomeKitService {
   getTargetHeatingCoolingState = async () => {
     this.log("Getting target heating/cooling state");
 
-    const vehicleStatus = await this.incontrol.getVehicleStatus();
+    const vehicleStatus = await this.jlrRemoteApi.getVehicleStatus();
     const climateStatus = vehicleStatus.CLIMATE_STATUS_OPERATING_STATUS;
 
     const climateOnState =
@@ -83,9 +83,9 @@ export class HomeKitPreconditioningService extends HomeKitService {
     this.log("Setting heating cooling state to", state);
 
     if (state === this.Characteristic.CurrentHeatingCoolingState.OFF) {
-      await this.incontrol.stopPreconditioning();
+      await this.jlrRemoteApi.stopPreconditioning();
     } else {
-      await this.incontrol.startPreconditioning(this.targetTemperature);
+      await this.jlrRemoteApi.startPreconditioning(this.targetTemperature);
     }
 
     // We succeeded, so update the "current" state as well.
