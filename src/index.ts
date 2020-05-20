@@ -16,12 +16,12 @@ export default function (homebridge: API) {
 
 class JaguarLandRoverAccessory {
   private readonly services: any[]
-  private readonly jlrRemoteService: JaguarLandRoverRemoteApi
+  private readonly jlrRemoteApi: JaguarLandRoverRemoteApi
 
   constructor(private log: any, config: any) {
     const name = config["name"]
 
-    this.jlrRemoteService = new JaguarLandRoverRemoteApi(log, myCredentials)
+    this.jlrRemoteApi = new JaguarLandRoverRemoteApi(log, myCredentials)
     this.services = [
     ]
   }
