@@ -1,6 +1,4 @@
 require("@babel/polyfill");
-//#region Imports
-import callbackify from "./util/callbackify"
 import { API, HAP } from "homebridge"
 import { JaguarLandRoverRemoteApi } from "./util/remote"
 import { myCredentials } from "./credentials.private"
@@ -8,7 +6,7 @@ import { BatteryService, ChargingState } from "hap-nodejs/gen/"
 import { HomeKitChargerService } from "./services/charger"
 import { HomeKitLockService } from "./services/lock"
 import { HomeKitPreconditioningService } from "./services/preconditioning"
-//#endregion
+import callbackify from "./util/callbackify"
 
 let hap: HAP;
 
